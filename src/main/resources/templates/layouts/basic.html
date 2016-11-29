@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.springframework.org/schema/security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Gift
+	Organizer</title>
+<!-- <link rel="stylesheet" type="text/css"
+	href="https://bootswatch.com/darkly/bootstrap.min.css" /> -->
+<link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/agency.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css" />
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css' />
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css' />
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css' />
+<link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps" rel="stylesheet" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+.tempfix {
+	margin-top: 120px;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+}
+</style>
+</head>
+<body>
+	<div class="container tempfix">
+		<div th:replace="snippets/header :: header"></div>
+
+		<div layout:fragment="content"></div>
+
+		<div th:replace="snippets/footer :: footer"></div>
+	</div>
+
+	<div th:replace="snippets/scripts :: scripts"></div>
+</body>
+</html>
