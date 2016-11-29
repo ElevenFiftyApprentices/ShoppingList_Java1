@@ -27,7 +27,7 @@ public class ShoppingList {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private long user; 
+	private User user; 
 	
 	@Size(max = 100)
 	private String name;
@@ -35,9 +35,9 @@ public class ShoppingList {
 	@Size(max = 100)
 	private String color;
 	
-	private Date createdUTC;
+	private Date createdUtc;
 	
-	private Date modifiedUTC;
+	private Date modifiedUtc;
 
 
 	public long getId() {
@@ -50,11 +50,11 @@ public class ShoppingList {
 
 
 
-	public long getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(long user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -75,19 +75,19 @@ public class ShoppingList {
 	}
 
 	public Date getCreatedUTC() {
-		return createdUTC;
+		return createdUtc;
 	}
 
 	public void setCreatedUTC(Date createdUTC) {
-		this.createdUTC = createdUTC;
+		this.createdUtc = createdUTC;
 	}
 
 	public Date getModifiedUTC() {
-		return modifiedUTC;
+		return modifiedUtc;
 	}
 
 	public void setModifiedUTC(Date modifiedUTC) {
-		this.modifiedUTC = modifiedUTC;
+		this.modifiedUtc = modifiedUTC;
 	}
 
 	

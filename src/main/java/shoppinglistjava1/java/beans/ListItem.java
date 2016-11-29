@@ -34,7 +34,6 @@ public class ListItem {
 	
 	private Date modifiedUtc;
 	
-	private long shoppingListId;
 	
 	@OneToMany(mappedBy="listItem")
 	private List <Note> Notes;
@@ -105,13 +104,6 @@ public class ListItem {
 		this.modifiedUtc = modifiedUtc;
 	}
 
-	public long getShoppingListId() {
-		return shoppingListId;
-	}
-
-	public void setShoppingListId(long shoppingListId) {
-		this.shoppingListId = shoppingListId;
-	}
 	
 	public String getPriorityText(int priority){
 		String prioText = "";
