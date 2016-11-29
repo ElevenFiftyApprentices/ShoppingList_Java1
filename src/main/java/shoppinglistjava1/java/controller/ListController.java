@@ -44,4 +44,13 @@ public class ListController {
 		return "listview";
 	}
 	
+	@GetMapping("/lists")
+	public String lists(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("lists", shoppingListRepo.findAllByUser(v));
+		return "lists";
+	}
+	
 }
