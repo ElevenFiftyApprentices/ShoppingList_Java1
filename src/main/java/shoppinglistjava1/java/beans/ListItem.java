@@ -1,6 +1,7 @@
 package shoppinglistjava1.java.beans;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -33,6 +35,27 @@ public class ListItem {
 	private Date modifiedUtc;
 	
 	private long shoppingListId;
+	
+	@OneToMany(mappedBy="listItem")
+	private List <Note> Notes;
+
+	
+
+	public ShoppingList getList() {
+		return list;
+	}
+
+	public void setList(ShoppingList list) {
+		this.list = list;
+	}
+
+	public List<Note> getNotes() {
+		return Notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		Notes = notes;
+	}
 
 	public long getId() {
 		return id;
