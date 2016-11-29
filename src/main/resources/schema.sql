@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS shoppingList.users (
   modified_utc TIMESTAMP NOT NULL,
   PRIMARY KEY(id));
   
-CREATE TABLE IF NOT EXISTS shoppingList.listItems (
+CREATE TABLE IF NOT EXISTS shoppingList.list_items (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   shopping_list_id INT NOT NULL,
   contents VARCHAR(200) NOT NULL,
