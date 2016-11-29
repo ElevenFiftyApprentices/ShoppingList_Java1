@@ -85,4 +85,31 @@ public class ListController {
 			return "redirect:/list/" + id;
 		}
 	}
+	
+	@GetMapping("/addlist")
+	public String listAdd(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("list", new ShoppingList());
+		return "addlist";
+	}
+
+	@PostMapping("/addlist")
+	public String listAddSave(Model model, @ModelAttribute @Valid ShoppingList list,
+			BindingResult result) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		if (result.hasErrors()) {
+			model.addAttribute("list", list);
+			return "addlist";
+		} else {
+			list.setUser(v);
+			list.setCreatedUTC(new Date(System.currentTimeMillis()));
+			list.setModifiedUTC(new Date(System.currentTimeMillis()));
+			shoppingListRepo.save(list);
+			return "redirect:/lists/";
+		}
+	}
 }
