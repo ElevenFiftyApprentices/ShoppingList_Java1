@@ -1,4 +1,4 @@
-package team.awesome;
+package shoppinglistjava1.java;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
