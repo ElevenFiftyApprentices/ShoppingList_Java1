@@ -22,7 +22,7 @@
                         <a href="#" th:href="@{/home}">Home</a>
                     </li>
                     <li sec:authorize="isAuthenticated()">
-                        <a href="#" th:href="@{/listss}">Lists</a>
+                        <a href="#" th:href="@{/lists}">Lists</a>
                     </li>
                     <li sec:authorize="isAuthenticated()"><a href="#" onclick="$('#logoutForm').submit();">Logout</a></li>
 
