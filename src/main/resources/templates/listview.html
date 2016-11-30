@@ -17,11 +17,12 @@
   			<thead>
   				<tr>
   					<th>Contents</th>
-  					<th class="pull-right">Options</th>
+  					<th>Options</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="item : ${shoppingList.listItems}">
+					<td><input type="checkbox" />&nbsp;</td>
   					<td th:text="${item.contents}"></td>
 					<td class="pull-right"><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${shoppingList.id}/delete/${item.id}|}" role="button">Delete</a></td>
   				</tr>
