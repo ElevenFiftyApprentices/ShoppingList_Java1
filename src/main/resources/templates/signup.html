@@ -12,6 +12,7 @@
 		<form method="POST" th:object="${user}">
 			<input type="hidden" name="id" th:value="*{id}" />
 			<input type="hidden" name="active" value="true" />
+			<input type="hidden" name="role" value="USER" />
 			<div class="form-group">
 				<label for="fullName">First Name</label> <input type="text"
 					name="fullName" class="form-control" placeholder="First Name"
@@ -32,12 +33,6 @@
 					class="form-control" placeholder="email@email.com" th:field="*{email}" /> <span
 					th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
 					Error</span>
-			</div>
-			<div class="form-group">
-				<label for="phoneNumber">Phone Number</label> <input type="text"
-					name="phoneNumber" class="form-control" placeholder="1"
-					th:field="*{phoneNumber}" /> <span
-					th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
 			</div>
 			<div class="form-group">
 				<label for="password">Password</label> <input type="password"
