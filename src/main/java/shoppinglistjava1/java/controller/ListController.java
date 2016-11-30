@@ -1,7 +1,6 @@
 package shoppinglistjava1.java.controller;
 
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import static java.util.Comparator.comparing;
 
 import shoppinglistjava1.java.beans.ListItem;
 import shoppinglistjava1.java.beans.ShoppingList;
@@ -189,18 +187,29 @@ public class ListController {
 
 	@GetMapping("/list/{id}/deletechecked")
 	public String deleteChecked(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
 		model.addAttribute("list", l);
+		model.addAttribute("listItems", l.getListItems());
+		return "deletechecked";
+	}
+	
+	@PostMapping("/list/{id}/deletechecked")
+	public String deleteCheckedSave(Model model, @PathVariable(name = "id") long id) {
 		ShoppingList l = shoppingListRepo.findOne(id);
 		List<ListItem> li = l.getListItems();
+		ArrayList<ListItem> liTwo = new ArrayList<ListItem>();
 		for (ListItem i : li) {
 			if (i.isChecked == true) {
-				li.remove(i);
+				liTwo.add(i);
 				listItemRepo.delete(i);
+			} 
+			for(ListItem i2 : liTwo){
+				li.remove(i2);
 			}
 		}
+		l.setListItems(li);
 		shoppingListRepo.save(l);
-		model.addAttribute("shoppingList", l);
-		model.addAttribute("listItems", li);
+		model.addAttribute("list", l);
 		return "redirect:/list/" + id;
 	}
 
