@@ -136,7 +136,13 @@ public class ListController {
 			model.addAttribute("item", item);
 			return "listitemadd";
 		} else {
+			ShoppingList l = shoppingListRepo.findOne(id);
+			List<ListItem> li = l.getListItems();
+			li.remove(item);
 			listItemRepo.delete(item);
+			l.setListItems(li);
+			shoppingListRepo.save(l);
+			model.addAttribute("list", l);
 			return "redirect:/list/" + id;
 		}
 	}
@@ -208,15 +214,10 @@ public class ListController {
 	public String orderHigh(Model model, @PathVariable(name = "id") long id) {
 		ShoppingList l = shoppingListRepo.findOne(id);
 		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
-//		Collections.sort(li, comparing(ListItem::getPriority));
-//		li.sort((u1, u2) -> { 
-//			return u1.getPriority().compareTo(u2.getPriority());});
 		for(ListItem lix : li){
 			System.out.println(lix.getPriority());
-		}
-		
+		}		
 		model.addAttribute("listItems", li);
-//		shoppingListRepo.save(l);
 		model.addAttribute("shoppingList", l);
 		return "listview";
 	}
