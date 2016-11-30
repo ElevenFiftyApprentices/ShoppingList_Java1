@@ -112,4 +112,47 @@ public class ListController {
 			return "redirect:/lists/";
 		}
 	}
+	
+	@GetMapping("/list/{id}/delete/{itemid}")
+	public String listItemDelete(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("list", shoppingListRepo.findOne(id));
+		model.addAttribute("item", listItemRepo.findOne(itemid));
+		return "listitemdelete";
+	}
+
+	@PostMapping("/list/{id}/delete/{itemid}")
+	public String listItemDeleteSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("item", item);
+			return "listitemadd";
+		} else {
+			listItemRepo.delete(item);
+			return "redirect:/list/" + id;
+		}
+	}
+	
+	@GetMapping("/list/{id}/delete")
+	public String listDelete(Model model, @PathVariable(name = "id") long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("list", shoppingListRepo.findOne(id));
+		return "deletelist";
+	}
+
+	@PostMapping("/list/{id}/delete")
+	public String listDeleteSave(Model model, @PathVariable(name = "id") long id,
+			 @ModelAttribute @Valid ShoppingList list, BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("list", list);
+			return "deletelist";
+		} else {
+			shoppingListRepo.delete(list);
+			return "redirect:/lists";
+		}
+	}
 }
