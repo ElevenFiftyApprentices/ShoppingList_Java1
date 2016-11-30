@@ -28,7 +28,7 @@ public class ListItem {
 
 	private int priority;
 	
-	private boolean isChecked;
+	public boolean isChecked;
 	
 	private Date createdUtc;
 	

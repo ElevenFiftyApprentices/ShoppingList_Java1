@@ -155,4 +155,16 @@ public class ListController {
 			return "redirect:/lists";
 		}
 	}
+	
+	@GetMapping("/list/{id}/check/{itemid}")
+	public String listItemCheck(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+		ListItem i = listItemRepo.findOne(itemid);
+		i.setChecked(true);
+		listItemRepo.save(i);
+		model.addAttribute("shoppingList", shoppingListRepo.findOne(id));
+		return "listview";
+	}
+
+	
+	
 }
