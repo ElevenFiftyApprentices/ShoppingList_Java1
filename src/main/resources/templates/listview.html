@@ -12,8 +12,22 @@
   		<span class="pull-right" style="padding:5px"><a class="btn btn-default" href="/" th:href="@{|/list/${shoppingList.id}/additem|}" role="button"> Add Item</a></span>
   		<span class="pull-right" style="padding:5px"><a class="btn btn-default" href="/" th:href="@{|/list/${shoppingList.id}/deletechecked|}" role="button"> Delete Checked</a></span>
   		</div>
+  		<!-- Example single danger button -->
+<div class="btn-group">
+	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action
+  	</button>
+  	<div class="dropdown-menu">
+    	<a class="dropdown-item" href="high">Highest priority</a>
+    	<a class="dropdown-item" href="low">Lowest priority</a>
+    	<a class="dropdown-item" href="az">A to Z</a>
+    	<a class="dropdown-item" href="za">Z to A</a>
+    	<div class="dropdown-divider"></div>
+    	<a class="dropdown-item" href="#">Separated link</a>
+ 	</div>
+</div>
   		<div class="row">
-  		<table class="table table-striped table-hover ">
+  		<table class="table table-striped table-hover">
   			<thead>
   				<tr>
   					<th></th>
