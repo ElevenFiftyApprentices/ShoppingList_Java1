@@ -1,6 +1,7 @@
 package shoppinglistjava1.java.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -164,7 +165,35 @@ public class ListController {
 		model.addAttribute("shoppingList", shoppingListRepo.findOne(id));
 		return "listview";
 	}
+	
+	@GetMapping("/list/{id}/clearchecked")
+	public String clearChecked(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = l.getListItems();
+		for(ListItem i : li){
+			i.setChecked(false);
+			listItemRepo.save(i);
+		}
+		shoppingListRepo.save(l);
+		model.addAttribute("shoppingList", shoppingListRepo.findOne(id));
+		return "listview";
+	}
+	
+	
 
+	@GetMapping("/list/{id}/deletechecked")
+	public String deleteChecked(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = l.getListItems();
+		for(ListItem i : li){
+			if(i.isChecked == true){
+				listItemRepo.delete(i);
+			} 
+		}
+		shoppingListRepo.save(l);
+		model.addAttribute("shoppingList", l);
+		return "redirect:/list/" + id;
+	}
 	
 	
 }
