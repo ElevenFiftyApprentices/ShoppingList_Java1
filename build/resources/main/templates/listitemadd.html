@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
+<head>
+<title>Shopping List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+<div class="row">
+	<span style="font-size:30px" th:text="'Add Item for ' + ${list.name}"></span> <span class="pull-right"><a class="btn btn-default" href="/list/${list.id}">Back</a></span>
+	</div>
+	<div class="row">
+		<form method="POST" th:object="${item}">
+			<input type="hidden" name="id" th:value="*{id}" />
+			<input type="hidden" name="shoppingListId" th:value="${list.id}"/>
+			<input type="hidden" name="isChecked" value="false"/>
+			<div class="form-group">
+				<label for="name">Contents</label> <input type="text"
+					name="name" class="form-control" placeholder="Contents"
+					th:field="*{contents}" /> <span
+					th:if="${#fields.hasErrors('contents')}"
+					th:errors="*{contents}">Contents Error</span>
+			</div>
+			<div class="form-group">
+		    	<label for="bought">Priority:</label>
+		    	<select class="form-control" name="bought">
+		    		<option th:selected="*{priority} == 1" value="1">Grab it now!</option>
+		    		<option th:selected="*{priority} == 2" value="2">Need it soon!</option>
+		    		<option th:selected="*{priority} == 3" value="3">It can wait!</option>
+		    		</select>
+		    </div>
+			<button type="submit" class="btn btn-default">Save</button>
+		</form>
+			
+	</div>
+</body>
+</html>

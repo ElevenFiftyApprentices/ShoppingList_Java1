@@ -15,7 +15,7 @@ group = 'com.stormpath'
 version = '0.1.0'
 
 jar {
-    baseName = 'giftOrganizer'
+    baseName = 'shoppingList'
     version =  '0.1.0'
 }
 
