@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.springframework.org/schema/security">
+<head></head>
+<body>
+<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top" th:fragment="header">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#" th:href="@{/}">Shopping List</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a href="#" th:href="@{/}">Home</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a href="#" th:href="@{/lists}">Lists</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()"><a href="#" onclick="$('#logoutForm').submit();">Logout</a></li>
+
+                </ul>
+                <form th:action="@{/logout}" method="post" style="display: none;" id="logoutForm" sec:authorize="isAuthenticated()">
+		            <input type="submit" value="Log Out"/>
+		        </form>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</body>
+</html>
