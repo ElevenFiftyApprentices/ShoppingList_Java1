@@ -21,7 +21,7 @@ public class ListItem {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
     @JoinColumn(name = "shopping_list_id")
     private ShoppingList list;
 	

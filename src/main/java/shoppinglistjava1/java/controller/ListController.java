@@ -131,20 +131,13 @@ public class ListController {
 
 	@PostMapping("/list/{id}/delete/{itemid}")
 	public String listItemDeleteSave(Model model, @PathVariable(name = "id") long id,
-			@ModelAttribute @Valid ListItem item, BindingResult result) {
-		if (result.hasErrors()) {
-			model.addAttribute("item", item);
-			return "listitemadd";
-		} else {
+			@PathVariable(name = "itemid") long itemid) {
 			ShoppingList l = shoppingListRepo.findOne(id);
 			List<ListItem> li = l.getListItems();
-			li.remove(item);
-			listItemRepo.delete(item);
-			l.setListItems(li);
-			shoppingListRepo.save(l);
+			listItemRepo.delete(listItemRepo.findOne(itemid));
+			li.remove(listItemRepo.findOne(itemid));
 			model.addAttribute("list", l);
 			return "redirect:/list/" + id;
-		}
 	}
 
 	@GetMapping("/list/{id}/delete")
@@ -196,6 +189,7 @@ public class ListController {
 
 	@GetMapping("/list/{id}/deletechecked")
 	public String deleteChecked(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("list", l);
 		ShoppingList l = shoppingListRepo.findOne(id);
 		List<ListItem> li = l.getListItems();
 		for (ListItem i : li) {
