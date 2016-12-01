@@ -94,10 +94,10 @@ public class ListController {
 	public String listItemEdit(Model model, @PathVariable(name = "id") long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
-		User u = userRepo.findOneByEmail(email);
-		model.addAttribute("user", u);
+		User v = userRepo.findOneByEmail(email);
 		model.addAttribute("list", shoppingListRepo.findOne(id));
-		model.addAttribute("item", listItemRepo.findOne(id));
+		model.addAttribute("item", new ListItem());
+
 		return "listitemedit";
 	}
 
