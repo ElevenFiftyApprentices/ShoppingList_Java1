@@ -201,12 +201,13 @@ public class ListController {
 		for (ListItem i : li) {
 			if (i.isChecked == true) {
 				liTwo.add(i);
-				listItemRepo.delete(i);
 			} 
+		}
 			for(ListItem i2 : liTwo){
 				li.remove(i2);
+				listItemRepo.delete(i2);
 			}
-		}
+	
 		l.setListItems(li);
 		shoppingListRepo.save(l);
 		model.addAttribute("list", l);
@@ -216,10 +217,7 @@ public class ListController {
 	@GetMapping("/list/{id}/high")
 	public String orderHigh(Model model, @PathVariable(name = "id") long id) {
 		ShoppingList l = shoppingListRepo.findOne(id);
-		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
-		for(ListItem lix : li){
-			System.out.println(lix.getPriority());
-		}		
+		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);	
 		model.addAttribute("listItems", li);
 		model.addAttribute("shoppingList", l);
 		return "listview";
