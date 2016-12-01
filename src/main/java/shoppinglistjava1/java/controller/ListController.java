@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import shoppinglistjava1.java.beans.ListItem;
+import shoppinglistjava1.java.beans.Note;
 import shoppinglistjava1.java.beans.ShoppingList;
 import shoppinglistjava1.java.beans.User;
 import shoppinglistjava1.java.repository.ListItemRepository;
@@ -69,17 +71,57 @@ public class ListController {
 		String email = auth.getName();
 		User v = userRepo.findOneByEmail(email);
 		model.addAttribute("list", shoppingListRepo.findOne(id));
-		model.addAttribute("item", new ListItem());
+		
+		Note n = new Note();
+		ListItem li = new ListItem();
+		li.setNote(n);
+		model.addAttribute("note", n);
+		model.addAttribute("item", li);
 
 		return "listitemadd";
 	}
 
 	@PostMapping("/list/{id}/additem")
-	public String listItemAddSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item,
+	public String listItemAddSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item, 
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("list", shoppingListRepo.findOne(id));
+			model.addAttribute("item", item);
+			return "listitemadd";
+		} else {
+			
+			model.addAttribute("list", shoppingListRepo.findOne(id));
+			item.setList(shoppingListRepo.findOne(id));
+			item.setCreatedUtc(new Date(System.currentTimeMillis()));
+			item.setModifiedUtc(new Date(System.currentTimeMillis()));
+			Note n = new Note();
+			n.setBody(" ");
+			noteRepo.save(n);
+			System.out.println(n.getId());
+			item.setNote(n);
+			listItemRepo.save(item);
+			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
+			return "redirect:/list/" + id;
+		}
+	}
+	
+	@GetMapping("/list/{id}/edititem/{itemid}")
+	public String listItemEdit(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("list", shoppingListRepo.findOne(id));
+		model.addAttribute("item", listItemRepo.findOne(itemid));
+
+		return "listitemedit";
+	}
+
+	@PostMapping("/list/{id}/edititem/{itemid}")
+	public String listItemEditSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item, @PathVariable(name = "itemid") long itemid,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			model.addAttribute("item", item);
-			return "listitemadd";
+			return "listitemedit";
 		} else {
 			item.setList(shoppingListRepo.findOne(id));
 			item.setCreatedUtc(new Date(System.currentTimeMillis()));
@@ -201,12 +243,13 @@ public class ListController {
 		for (ListItem i : li) {
 			if (i.isChecked == true) {
 				liTwo.add(i);
-				listItemRepo.delete(i);
 			} 
+		}
 			for(ListItem i2 : liTwo){
 				li.remove(i2);
+				listItemRepo.delete(i2);
 			}
-		}
+	
 		l.setListItems(li);
 		shoppingListRepo.save(l);
 		model.addAttribute("list", l);
@@ -218,11 +261,83 @@ public class ListController {
 		ShoppingList l = shoppingListRepo.findOne(id);
 		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
 		for(ListItem lix : li){
-			System.out.println(lix.getPriority());
 		}		
 		model.addAttribute("listItems", li);
 		model.addAttribute("shoppingList", l);
 		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/low")
+	public String orderLow(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByPriorityDesc(l);
+		for(ListItem lix : li){
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/az")
+	public String orderAz(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByContentsAsc(l);
+		for(ListItem lix : li){
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/za")
+	public String orderZa(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByContentsDesc(l);
+		for(ListItem lix : li){
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/edititem/{itemid}/editnote")
+	public String NoteEdit(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		ShoppingList l = shoppingListRepo.findOne(id);
+		ListItem li = listItemRepo.findOne(itemid);
+		if(listItemRepo.findOne(itemid).getNote() == null){
+			Note n = new Note();
+			li.setNote(n);
+			model.addAttribute("note", n);
+		} else {
+			Note n = listItemRepo.findOne(itemid).getNote();
+			li.setNote(n);
+			model.addAttribute("note", n);
+			
+		}
+		
+		model.addAttribute("list", l);
+		model.addAttribute("item", li);
+		
+
+		return "noteedit";
+	}
+
+	@PostMapping("/list/{id}/edititem/{itemid}/editnote")
+	public String NoteEditSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid Note note, @PathVariable(name = "itemid") long itemid,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("note", note);
+			return "noteedit";
+		} else {
+			note.setCreatedUtc(new Date(System.currentTimeMillis()));
+			note.setModifiedUtc(new Date(System.currentTimeMillis()));
+			noteRepo.save(note);
+			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
+			return "redirect:/list/" + id;
+		}
 	}
 
 }
