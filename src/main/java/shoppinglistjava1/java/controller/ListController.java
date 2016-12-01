@@ -43,7 +43,7 @@ public class ListController {
 	private NoteRepository noteRepo;
 
 	@GetMapping("/list/{id}")
-	public String list(Model model, @PathVariable(name = "id") long id) {
+	public String list(Model model, @PathVariable(name = "id") long id, @RequestParam(name = "srch-term", required = false) String searchTerm) {
 		model.addAttribute("id", id);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -52,7 +52,18 @@ public class ListController {
 		if (v.getShoppingLists().contains(l)) {
 			model.addAttribute("shoppingList", l);
 		}
-		model.addAttribute("listItems", l.getListItems());
+		if (searchTerm == null || "".equals(searchTerm)) {
+			model.addAttribute("listItems", l.getListItems());
+		} else {
+			List<ListItem> li = listItemRepo.findByContentsContainsOrNoteContainsAllIgnoreCase(searchTerm, searchTerm);
+			ArrayList<ListItem> li2 = new ArrayList();
+			for(ListItem lix : li){
+				if(l.getListItems().contains(lix)){
+					li2.add(lix);
+				}
+			}
+			model.addAttribute("listItems", li2);
+		}
 		return "listview";
 	}
 
