@@ -56,7 +56,9 @@
 							th:utext="${item.contents}"></p>
 					</td>
 					<td th:if="${item.isChecked} == false" th:utext="${item.contents}"></td>
-					<td th:if="*{note} != null"> <span th:if="*{! #strings.isEmpty(note.body)}" th:text="${item.note.body}"></span></td>
+					<td> <span th:text="${item.note.body}"></span> <a class="btn btn-default btn-xs" href="/"
+						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}/editnote|}" role="button">
+							 <i class="fa fa-sticky-note-o" aria-hidden="true"></i></a></td>
 					<td class="pull-right"><a class="btn btn-default btn-xs" href="/"
 						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}|}" role="button">
 							Edit </a></td>

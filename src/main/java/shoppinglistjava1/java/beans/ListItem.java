@@ -35,8 +35,10 @@ public class ListItem {
 	private Date modifiedUtc;
 	
 	
-	@OneToOne(mappedBy="listItem")
+	@OneToOne
+    @JoinColumn(name = "note_id")
 	private Note note;
+
 
 	
 

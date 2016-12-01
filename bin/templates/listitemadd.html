@@ -15,6 +15,7 @@
 			<input type="hidden" name="id" th:value="*{id}" />
 			<input type="hidden" name="shoppingListId" th:value="${list.id}"/>
 			<input type="hidden" name="isChecked" value="false"/>
+			<input type="hidden" name="noteId" th:value="${note.id}"/>
 			<div class="form-group">
 				<label for="contents">Contents</label> <input type="text"
 					name="contents" class="form-control" placeholder="Contents"

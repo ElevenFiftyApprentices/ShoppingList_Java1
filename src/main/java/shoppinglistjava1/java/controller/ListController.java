@@ -74,7 +74,6 @@ public class ListController {
 		
 		Note n = new Note();
 		ListItem li = new ListItem();
-		n.setListItem(li);
 		li.setNote(n);
 		model.addAttribute("note", n);
 		model.addAttribute("item", li);
@@ -95,6 +94,11 @@ public class ListController {
 			item.setList(shoppingListRepo.findOne(id));
 			item.setCreatedUtc(new Date(System.currentTimeMillis()));
 			item.setModifiedUtc(new Date(System.currentTimeMillis()));
+			Note n = new Note();
+			n.setBody(" ");
+			noteRepo.save(n);
+			System.out.println(n.getId());
+			item.setNote(n);
 			listItemRepo.save(item);
 			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
 			return "redirect:/list/" + id;
@@ -294,6 +298,46 @@ public class ListController {
 		model.addAttribute("listItems", li);
 		model.addAttribute("shoppingList", l);
 		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/edititem/{itemid}/editnote")
+	public String NoteEdit(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		ShoppingList l = shoppingListRepo.findOne(id);
+		ListItem li = listItemRepo.findOne(itemid);
+		if(listItemRepo.findOne(itemid).getNote() == null){
+			Note n = new Note();
+			li.setNote(n);
+			model.addAttribute("note", n);
+		} else {
+			Note n = listItemRepo.findOne(itemid).getNote();
+			li.setNote(n);
+			model.addAttribute("note", n);
+			
+		}
+		
+		model.addAttribute("list", l);
+		model.addAttribute("item", li);
+		
+
+		return "noteedit";
+	}
+
+	@PostMapping("/list/{id}/edititem/{itemid}/editnote")
+	public String NoteEditSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid Note note, @PathVariable(name = "itemid") long itemid,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("note", note);
+			return "noteedit";
+		} else {
+			note.setCreatedUtc(new Date(System.currentTimeMillis()));
+			note.setModifiedUtc(new Date(System.currentTimeMillis()));
+			noteRepo.save(note);
+			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
+			return "redirect:/list/" + id;
+		}
 	}
 
 }

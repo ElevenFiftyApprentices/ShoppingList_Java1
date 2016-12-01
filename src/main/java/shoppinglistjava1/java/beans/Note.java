@@ -15,12 +15,8 @@ import javax.persistence.Table;
 public class Note {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	@OneToOne 
-    @JoinColumn(name="shopping_list_item_id") 
-    private ListItem listItem;
 
 	
 	private String body;
@@ -35,18 +31,6 @@ public class Note {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-
-
-	
-
-	public ListItem getListItem() {
-		return listItem;
-	}
-
-	public void setListItem(ListItem listItem) {
-		this.listItem = listItem;
 	}
 
 	public String getBody() {
