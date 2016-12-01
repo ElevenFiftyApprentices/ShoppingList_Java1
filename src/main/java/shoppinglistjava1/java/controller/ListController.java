@@ -90,19 +90,19 @@ public class ListController {
 		}
 	}
 	
-	@GetMapping("/list/{id}/edititem")
-	public String listItemEdit(Model model, @PathVariable(name = "id") long id) {
+	@GetMapping("/list/{id}/edititem/{itemid}")
+	public String listItemEdit(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User v = userRepo.findOneByEmail(email);
 		model.addAttribute("list", shoppingListRepo.findOne(id));
-		model.addAttribute("item", new ListItem());
+		model.addAttribute("item", listItemRepo.findOne(itemid));
 
 		return "listitemedit";
 	}
 
-	@PostMapping("/list/{id}/edititem")
-	public String listItemEditSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item,
+	@PostMapping("/list/{id}/edititem/{itemid}")
+	public String listItemEditSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item, @PathVariable(name = "itemid") long itemid,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			model.addAttribute("item", item);
