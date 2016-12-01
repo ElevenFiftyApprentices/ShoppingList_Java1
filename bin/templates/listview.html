@@ -10,13 +10,19 @@
 	<div class="row">
 		<span style="font-size: 30px; padding: 5px"
 			th:text="${shoppingList.name}"> </span><span style="padding: 5px">
-			Shopping List</span> <span class="pull-right" style="padding: 5px"><a
+			Shopping List</span> 
+			<span class="pull-right" style="padding: 5px"><a 
 			class="btn btn-default" href="/"
 			th:href="@{|/list/${shoppingList.id}/additem|}" role="button">
-				Add Item</a></span> <span class="pull-right" style="padding: 5px"><a
+			Add Item</a></span> 
+			<span class="pull-right" style="padding: 5px"><a 
+			class="btn btn-default" href="/"
+			th:href="@{|/list/${shoppingList.id}/edititem|}" role="button">
+			Edit Item</a></span> 	
+			<span class="pull-right" style="padding: 5px"><a
 			class="btn btn-default" href="/"
 			th:href="@{|/list/${shoppingList.id}/deletechecked|}" role="button">
-				Delete Checked</a></span>
+			Delete Checked</a></span>
 	</div>
 	<div class="btn-group">
 		<button class="btn btn-primary btn-sm dropdown-toggle" type="button"
