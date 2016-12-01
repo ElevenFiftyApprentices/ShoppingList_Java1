@@ -1,7 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS shoppingList;
-use shoppingList;
+use heroku_5045fdc56437371;
 
-CREATE TABLE IF NOT EXISTS shoppingList.users (
+CREATE TABLE IF NOT EXISTS heroku_5045fdc56437371.users (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(45) NOT NULL,
   last_name VARCHAR(45) NOT NULL,
@@ -11,7 +10,7 @@ CREATE TABLE IF NOT EXISTS shoppingList.users (
   role VARCHAR(45) NOT NULL,
   PRIMARY KEY (id));
   
-  CREATE TABLE IF NOT EXISTS shoppingList.lists (
+  CREATE TABLE IF NOT EXISTS heroku_5045fdc56437371.lists (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   name VARCHAR(100) NOT NULL,
@@ -20,9 +19,10 @@ CREATE TABLE IF NOT EXISTS shoppingList.users (
   modified_utc TIMESTAMP NOT NULL,
   PRIMARY KEY(id));
   
-CREATE TABLE IF NOT EXISTS shoppingList.list_items (
+CREATE TABLE IF NOT EXISTS heroku_5045fdc56437371.list_items (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   shopping_list_id INT NOT NULL,
+  note_id INT NOT NULL,
   contents VARCHAR(200) NOT NULL,
   priority INT NOT NULL,
   is_checked tinyint(1) NOT NULL DEFAULT 0,
@@ -30,9 +30,8 @@ CREATE TABLE IF NOT EXISTS shoppingList.list_items (
   modified_utc TIMESTAMP NOT NULL,
   PRIMARY KEY(id));
   
-CREATE TABLE IF NOT EXISTS shoppingList.notes (
+CREATE TABLE IF NOT EXISTS heroku_5045fdc56437371.notes (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  shopping_list_item_id INT NOT NULL,
   body VARCHAR(200) NOT NULL,
   created_utc TIMESTAMP NOT NULL,
   modified_utc TIMESTAMP NOT NULL,

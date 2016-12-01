@@ -6,8 +6,8 @@
 </head>
 <body layout:fragment="content">
 	<div class="row">	
-  		<h1>Shopping List</h1>
-  		<a class="btn btn-default" href="/" th:href="@{|/list/add|}" role="button">Add List</a>
+  		<span style="font-size:36px">Shopping List</span><span class="pull-right">
+  		<a class="btn btn-default" href="/" th:href="@{|/addlist|}" role="button">Add List</a></span>
   		<table class="table table-striped table-hover ">
   			<thead>
   				<tr>
@@ -18,7 +18,7 @@
 			<tbody>
 				<tr th:each="list : ${lists}">
   					<td th:text="${list.name}"></td>
-					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}/show|}" role="button">Show</a></td>
+					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}|}" role="button">Show</a></td>
 					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}/delete|}" role="button">Delete</a></td>
   				</tr>
   					

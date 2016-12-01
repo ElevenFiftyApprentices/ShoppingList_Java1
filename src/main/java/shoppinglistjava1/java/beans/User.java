@@ -35,7 +35,6 @@ public class User {
 	@Size(max = 128)
 	private String email;
 	
-	@Size(max = 45)
 	private String password;
 	
 	private String role;
