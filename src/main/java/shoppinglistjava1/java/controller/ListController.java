@@ -89,6 +89,33 @@ public class ListController {
 			return "redirect:/list/" + id;
 		}
 	}
+	
+	@GetMapping("/list/{id}/edititem")
+	public String listItemEdit(Model model, @PathVariable(name = "id") long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("list", shoppingListRepo.findOne(id));
+		model.addAttribute("item", new ListItem());
+
+		return "listitemedit";
+	}
+
+	@PostMapping("/list/{id}/edititem")
+	public String listItemEditSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("item", item);
+			return "listitemedit";
+		} else {
+			item.setList(shoppingListRepo.findOne(id));
+			item.setCreatedUtc(new Date(System.currentTimeMillis()));
+			item.setModifiedUtc(new Date(System.currentTimeMillis()));
+			listItemRepo.save(item);
+			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
+			return "redirect:/list/" + id;
+		}
+	}
 
 	@GetMapping("/addlist")
 	public String listAdd(Model model) {
