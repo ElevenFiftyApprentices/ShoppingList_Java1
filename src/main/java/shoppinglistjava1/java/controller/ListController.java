@@ -201,12 +201,13 @@ public class ListController {
 		for (ListItem i : li) {
 			if (i.isChecked == true) {
 				liTwo.add(i);
-				listItemRepo.delete(i);
 			} 
+		}
 			for(ListItem i2 : liTwo){
 				li.remove(i2);
+				listItemRepo.delete(i2);
 			}
-		}
+	
 		l.setListItems(li);
 		shoppingListRepo.save(l);
 		model.addAttribute("list", l);
