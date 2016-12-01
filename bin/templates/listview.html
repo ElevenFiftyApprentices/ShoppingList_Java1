@@ -39,7 +39,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${shoppingList.listItems}">
+				<tr th:each="item : ${listItems}">
 					<td th:if="${item.isChecked} == true" class="pull-left"><a
 						th:href="@{|/list/${shoppingList.id}/check/${item.id}|}"><i
 							class="fa fa-check-square-o" aria-hidden="true"></i></a></td>
@@ -54,6 +54,7 @@
 					<td class="pull-right"><a class="btn btn-default btn-xs"
 						href="/" th:href="@{|/list/${shoppingList.id}/delete/${item.id}|}"
 						role="button">Delete</a></td>
+						
 				</tr>
 
 			</tbody>

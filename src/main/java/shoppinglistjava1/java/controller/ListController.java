@@ -1,5 +1,6 @@
 package shoppinglistjava1.java.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class ListController {
 		if (v.getShoppingLists().contains(l)) {
 			model.addAttribute("shoppingList", l);
 		}
+		model.addAttribute("listItems", l.getListItems());
 		return "listview";
 	}
 
@@ -83,10 +85,11 @@ public class ListController {
 			item.setCreatedUtc(new Date(System.currentTimeMillis()));
 			item.setModifiedUtc(new Date(System.currentTimeMillis()));
 			listItemRepo.save(item);
+			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
 			return "redirect:/list/" + id;
 		}
 	}
-	
+
 	@GetMapping("/addlist")
 	public String listAdd(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -97,8 +100,7 @@ public class ListController {
 	}
 
 	@PostMapping("/addlist")
-	public String listAddSave(Model model, @ModelAttribute @Valid ShoppingList list,
-			BindingResult result) {
+	public String listAddSave(Model model, @ModelAttribute @Valid ShoppingList list, BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User v = userRepo.findOneByEmail(email);
@@ -113,9 +115,10 @@ public class ListController {
 			return "redirect:/lists/";
 		}
 	}
-	
+
 	@GetMapping("/list/{id}/delete/{itemid}")
-	public String listItemDelete(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+	public String listItemDelete(Model model, @PathVariable(name = "id") long id,
+			@PathVariable(name = "itemid") long itemid) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User v = userRepo.findOneByEmail(email);
@@ -125,17 +128,16 @@ public class ListController {
 	}
 
 	@PostMapping("/list/{id}/delete/{itemid}")
-	public String listItemDeleteSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item,
-			BindingResult result) {
-		if (result.hasErrors()) {
-			model.addAttribute("item", item);
-			return "listitemadd";
-		} else {
-			listItemRepo.delete(item);
+	public String listItemDeleteSave(Model model, @PathVariable(name = "id") long id,
+			@PathVariable(name = "itemid") long itemid) {
+			ShoppingList l = shoppingListRepo.findOne(id);
+			List<ListItem> li = l.getListItems();
+			listItemRepo.delete(listItemRepo.findOne(itemid));
+			li.remove(listItemRepo.findOne(itemid));
+			model.addAttribute("list", l);
 			return "redirect:/list/" + id;
-		}
 	}
-	
+
 	@GetMapping("/list/{id}/delete")
 	public String listDelete(Model model, @PathVariable(name = "id") long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -147,53 +149,80 @@ public class ListController {
 
 	@PostMapping("/list/{id}/delete")
 	public String listDeleteSave(Model model, @PathVariable(name = "id") long id,
-			 @ModelAttribute @Valid ShoppingList list, BindingResult result) {
+			@ModelAttribute @Valid ShoppingList list, BindingResult result) {
 		if (result.hasErrors()) {
 			model.addAttribute("list", list);
 			return "deletelist";
 		} else {
 			shoppingListRepo.delete(list);
+			model.addAttribute("listItems", list.getListItems());
 			return "redirect:/lists";
 		}
 	}
-	
+
 	@GetMapping("/list/{id}/check/{itemid}")
-	public String listItemCheck(Model model, @PathVariable(name = "id") long id, @PathVariable(name = "itemid") long itemid) {
+	public String listItemCheck(Model model, @PathVariable(name = "id") long id,
+			@PathVariable(name = "itemid") long itemid) {
 		ListItem i = listItemRepo.findOne(itemid);
 		i.setChecked(true);
 		listItemRepo.save(i);
 		model.addAttribute("shoppingList", shoppingListRepo.findOne(id));
+		model.addAttribute("listItems",  shoppingListRepo.findOne(id).getListItems());
 		return "listview";
 	}
-	
+
 	@GetMapping("/list/{id}/clearchecked")
 	public String clearChecked(Model model, @PathVariable(name = "id") long id) {
 		ShoppingList l = shoppingListRepo.findOne(id);
 		List<ListItem> li = l.getListItems();
-		for(ListItem i : li){
+		for (ListItem i : li) {
 			i.setChecked(false);
 			listItemRepo.save(i);
 		}
 		shoppingListRepo.save(l);
+		model.addAttribute("listItems", li);
 		model.addAttribute("shoppingList", shoppingListRepo.findOne(id));
 		return "listview";
 	}
-	
-	
 
 	@GetMapping("/list/{id}/deletechecked")
 	public String deleteChecked(Model model, @PathVariable(name = "id") long id) {
 		ShoppingList l = shoppingListRepo.findOne(id);
-		List<ListItem> li = l.getListItems();
-		for(ListItem i : li){
-			if(i.isChecked == true){
-				listItemRepo.delete(i);
-			} 
-		}
-		shoppingListRepo.save(l);
-		model.addAttribute("shoppingList", l);
-		return "redirect:/list/" + id;
+		model.addAttribute("list", l);
+		model.addAttribute("listItems", l.getListItems());
+		return "deletechecked";
 	}
 	
-	
+	@PostMapping("/list/{id}/deletechecked")
+	public String deleteCheckedSave(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = l.getListItems();
+		ArrayList<ListItem> liTwo = new ArrayList<ListItem>();
+		for (ListItem i : li) {
+			if (i.isChecked == true) {
+				liTwo.add(i);
+				listItemRepo.delete(i);
+			} 
+			for(ListItem i2 : liTwo){
+				li.remove(i2);
+			}
+		}
+		l.setListItems(li);
+		shoppingListRepo.save(l);
+		model.addAttribute("list", l);
+		return "redirect:/list/" + id;
+	}
+
+	@GetMapping("/list/{id}/high")
+	public String orderHigh(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
+		for(ListItem lix : li){
+			System.out.println(lix.getPriority());
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+
 }

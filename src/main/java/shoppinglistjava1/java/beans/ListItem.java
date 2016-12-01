@@ -3,6 +3,7 @@ package shoppinglistjava1.java.beans;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class ListItem {
 	
 	private String contents;
 
-	private int priority;
+	private Integer priority;
 	
 	public boolean isChecked;
 	
@@ -72,11 +73,11 @@ public class ListItem {
 		this.contents = contents;
 	}
 
-	public int getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 
