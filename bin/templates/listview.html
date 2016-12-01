@@ -10,29 +10,27 @@
 	<div class="row">
 		<span style="font-size: 30px; padding: 5px"
 			th:text="${shoppingList.name}"> </span><span style="padding: 5px">
-			Shopping List</span> 
-			<span class="pull-right" style="padding: 5px"><a 
+			Shopping List</span> <span class="pull-right" style="padding: 5px"><a
 			class="btn btn-default" href="/"
 			th:href="@{|/list/${shoppingList.id}/additem|}" role="button">
-			Add Item</a></span> 
-			<span class="pull-right" style="padding: 5px"><a 
-			class="btn btn-default" href="/"
-			th:href="@{|/list/${shoppingList.id}/edititem|}" role="button">
-			Edit Item</a></span> 	
-			<span class="pull-right" style="padding: 5px"><a
+				Add Item</a></span> <span class="pull-right" style="padding: 5px"><a
 			class="btn btn-default" href="/"
 			th:href="@{|/list/${shoppingList.id}/deletechecked|}" role="button">
-			Delete Checked</a></span>
+				Delete Checked</a></span>
 	</div>
 	<div class="btn-group">
 		<button class="btn btn-primary btn-sm dropdown-toggle" type="button"
 			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			Sort</button>
 		<ul class="dropdown-menu">
-			<li class="dropdown-item"><a th:href="@{|/list/${shoppingList.id}/high|}">Highest Priority</a></li> 
-			<li class="dropdown-item"><a th:href="@{|/list/${shoppingList.id}/low|}">Lowest Priority</a></li>
-			<li class="dropdown-item"><a th:href="@{|/list/${shoppingList.id}/az|}">A to Z</a></li> 
-			<li class="dropdown-item"><a th:href="@{|/list/${shoppingList.id}/za|}">Z to A</a></li>
+			<li class="dropdown-item"><a
+				th:href="@{|/list/${shoppingList.id}/high|}">Highest Priority</a></li>
+			<li class="dropdown-item"><a
+				th:href="@{|/list/${shoppingList.id}/low|}">Lowest Priority</a></li>
+			<li class="dropdown-item"><a
+				th:href="@{|/list/${shoppingList.id}/az|}">A to Z</a></li>
+			<li class="dropdown-item"><a
+				th:href="@{|/list/${shoppingList.id}/za|}">Z to A</a></li>
 		</ul>
 	</div>
 	<div class="row">
@@ -57,10 +55,13 @@
 							th:utext="${item.contents}"></p>
 					</td>
 					<td th:if="${item.isChecked} == false" th:utext="${item.contents}"></td>
+					<td class="pull-right"><a class="btn btn-default" href="/"
+						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}|}" role="button">
+							Edit </a></td>
 					<td class="pull-right"><a class="btn btn-default btn-xs"
 						href="/" th:href="@{|/list/${shoppingList.id}/delete/${item.id}|}"
 						role="button">Delete</a></td>
-						
+
 				</tr>
 
 			</tbody>
