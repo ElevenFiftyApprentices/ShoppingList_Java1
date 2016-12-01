@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
+<head>
+<title>Shopping List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+
+	<div class="row">
+		<span style="font-size: 30px"
+			th:text="'Edit Note for ' + ${item.contents}"></span> <span
+			class="pull-right"><a class="btn btn-default"
+			href="/list/${list.id}">Back</a></span>
+	</div>
+
+	<div class="row">
+		<form method="POST" th:object="${note}">
+			<input type="hidden" name="id" th:value="*{id}" /> <input
+				type="hidden" th:field="${item.id}" /> 
+			<div class="form-group">
+				<label for="body">Body</label> <input type="text" name="body"
+					class="form-control" placeholder="Body" th:field="*{body}" />
+				<span th:if="${#fields.hasErrors('body')}"
+					th:errors="*{body}">Body Error</span>
+			</div>
+			<button type="submit" class="btn btn-default">Save</button>
+		</form>
+
+	</div>
+</body>
+</html>

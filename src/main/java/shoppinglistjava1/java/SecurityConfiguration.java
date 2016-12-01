@@ -45,9 +45,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource).rolePrefix("").passwordEncoder(passwordEncoder())
 				.usersByUsernameQuery(
-						"select email as username, password, active as enabled from heroku_cb833b8562280a4.users where email = ?")
+						"select email as username, password, active as enabled from heroku_5045fdc56437371.users where email = ?")
 				.authoritiesByUsernameQuery(
-						"select email as username, role as authority from heroku_cb833b8562280a4.users where email = ?");
+						"select email as username, role as authority from heroku_5045fdc56437371.users where email = ?");
 	}
 	
 

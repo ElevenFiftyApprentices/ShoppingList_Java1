@@ -1,7 +1,6 @@
 package shoppinglistjava1.java.beans;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -18,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "listItems")
 public class ListItem {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@ManyToOne
@@ -36,8 +35,10 @@ public class ListItem {
 	private Date modifiedUtc;
 	
 	
-	@OneToMany(mappedBy="listItem")
-	private List <Note> Notes;
+	@OneToOne
+    @JoinColumn(name = "note_id")
+	private Note note;
+
 
 	
 
@@ -49,12 +50,14 @@ public class ListItem {
 		this.list = list;
 	}
 
-	public List<Note> getNotes() {
-		return Notes;
+
+
+	public Note getNote() {
+		return note;
 	}
 
-	public void setNotes(List<Note> notes) {
-		Notes = notes;
+	public void setNote(Note note) {
+		this.note = note;
 	}
 
 	public long getId() {
