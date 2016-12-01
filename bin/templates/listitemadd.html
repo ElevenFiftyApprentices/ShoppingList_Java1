@@ -16,8 +16,8 @@
 			<input type="hidden" name="shoppingListId" th:value="${list.id}"/>
 			<input type="hidden" name="isChecked" value="false"/>
 			<div class="form-group">
-				<label for="name">Contents</label> <input type="text"
-					name="name" class="form-control" placeholder="Contents"
+				<label for="contents">Contents</label> <input type="text"
+					name="contents" class="form-control" placeholder="Contents"
 					th:field="*{contents}" /> <span
 					th:if="${#fields.hasErrors('contents')}"
 					th:errors="*{contents}">Contents Error</span>

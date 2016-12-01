@@ -39,6 +39,7 @@
 				<tr>
 					<th></th>
 					<th>Contents</th>
+					<th>Notes</th>
 					<th>Options</th>
 				</tr>
 			</thead>
@@ -55,7 +56,8 @@
 							th:utext="${item.contents}"></p>
 					</td>
 					<td th:if="${item.isChecked} == false" th:utext="${item.contents}"></td>
-					<td class="pull-right"><a class="btn btn-default" href="/"
+					<td th:if="*{note} != null"> <span th:if="*{! #strings.isEmpty(note.body)}" th:text="${item.note.body}"></span></td>
+					<td class="pull-right"><a class="btn btn-default btn-xs" href="/"
 						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}|}" role="button">
 							Edit </a></td>
 					<td class="pull-right"><a class="btn btn-default btn-xs"

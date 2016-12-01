@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,12 +15,13 @@ import javax.persistence.Table;
 public class Note {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
-    @JoinColumn(name = "shopping_list_item_id")
+	@OneToOne 
+    @JoinColumn(name="shopping_list_item_id") 
     private ListItem listItem;
+
 	
 	private String body;
 	
@@ -35,6 +36,10 @@ public class Note {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+
+
+	
 
 	public ListItem getListItem() {
 		return listItem;

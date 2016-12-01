@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import shoppinglistjava1.java.beans.ListItem;
+import shoppinglistjava1.java.beans.Note;
 import shoppinglistjava1.java.beans.ShoppingList;
 import shoppinglistjava1.java.beans.User;
 import shoppinglistjava1.java.repository.ListItemRepository;
@@ -69,18 +71,27 @@ public class ListController {
 		String email = auth.getName();
 		User v = userRepo.findOneByEmail(email);
 		model.addAttribute("list", shoppingListRepo.findOne(id));
-		model.addAttribute("item", new ListItem());
+		
+		Note n = new Note();
+		ListItem li = new ListItem();
+		n.setListItem(li);
+		li.setNote(n);
+		model.addAttribute("note", n);
+		model.addAttribute("item", li);
 
 		return "listitemadd";
 	}
 
 	@PostMapping("/list/{id}/additem")
-	public String listItemAddSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item,
+	public String listItemAddSave(Model model, @PathVariable(name = "id") long id, @ModelAttribute @Valid ListItem item, 
 			BindingResult result) {
 		if (result.hasErrors()) {
+			model.addAttribute("list", shoppingListRepo.findOne(id));
 			model.addAttribute("item", item);
 			return "listitemadd";
 		} else {
+			
+			model.addAttribute("list", shoppingListRepo.findOne(id));
 			item.setList(shoppingListRepo.findOne(id));
 			item.setCreatedUtc(new Date(System.currentTimeMillis()));
 			item.setModifiedUtc(new Date(System.currentTimeMillis()));
