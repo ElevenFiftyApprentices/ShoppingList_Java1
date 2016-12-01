@@ -218,7 +218,39 @@ public class ListController {
 		ShoppingList l = shoppingListRepo.findOne(id);
 		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
 		for(ListItem lix : li){
-			System.out.println(lix.getPriority());
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/low")
+	public String orderLow(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByPriorityDesc(l);
+		for(ListItem lix : li){
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/az")
+	public String orderAz(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByContentsAsc(l);
+		for(ListItem lix : li){
+		}		
+		model.addAttribute("listItems", li);
+		model.addAttribute("shoppingList", l);
+		return "listview";
+	}
+	
+	@GetMapping("/list/{id}/za")
+	public String orderZa(Model model, @PathVariable(name = "id") long id) {
+		ShoppingList l = shoppingListRepo.findOne(id);
+		List<ListItem> li = listItemRepo.findByListOrderByContentsDesc(l);
+		for(ListItem lix : li){
 		}		
 		model.addAttribute("listItems", li);
 		model.addAttribute("shoppingList", l);
