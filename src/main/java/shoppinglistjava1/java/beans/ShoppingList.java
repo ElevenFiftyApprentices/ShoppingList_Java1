@@ -48,8 +48,6 @@ public class ShoppingList {
 		this.id = id;
 	}
 
-
-
 	public User getUser() {
 		return user;
 	}
