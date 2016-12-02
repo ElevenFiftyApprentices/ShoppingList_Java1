@@ -101,9 +101,19 @@ a,
     box-shadow: none;
 }
 
+.btn-primary:hover {
+background:  #9400D3;
+}
 
 button:focus {
     outline: none !important;
+}
+
+.btn-primary,
+.btn-primary:active
+.btn-primary:focus {
+    background: #660099;
+    color: #FFFFFF;
 }
 
 
