@@ -68,13 +68,13 @@ body {
 </head>
 <body>
 	<div class="container tempfix">
-		<div th:replace="snippets/header :: header"></div>
+		<div th:replace="/snippets/header :: header"></div>
 
 		<div layout:fragment="content"></div>
 
-		<div th:replace="snippets/footer :: footer"></div>
+		<div th:replace="/snippets/footer :: footer"></div>
 	</div>
 
-	<div th:replace="snippets/scripts :: scripts"></div>
+	<div th:replace="/snippets/scripts :: scripts"></div>
 </body>
 </html>
