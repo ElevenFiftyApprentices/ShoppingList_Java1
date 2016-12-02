@@ -1,29 +1,68 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/basic">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
 <head>
-   <title>Shopping List</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Shopping List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body layout:fragment="content">
-	<div class="row">	
-  		<span style="font-size:36px">Shopping List</span><span class="pull-right">
-  		<a class="btn btn-default" href="/" th:href="@{|/addlist|}" role="button">Add List</a></span>
-  		<table class="table table-striped table-hover ">
-  			<thead>
-  				<tr>
-  					<th>Name</th>
+	<div class="btn-group col-lg-6">
+		<button class="btn btn-default dropdown-toggle" type="button"
+			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Sort</button>
+		<ul class="dropdown-menu">
+			<li class="dropdown-item"><a th:href="@{|/lists/az|}">A to Z
+					- Category</a></li>
+			<li class="dropdown-item"><a th:href="@{|/lists/za|}">Z to A
+					- Category</a></li>
+			<li class="dropdown-item"><a th:href="@{|/lists/azname|}">A to Z
+					- Name</a></li>
+			<li class="dropdown-item"><a th:href="@{|/lists/zaname|}">Z to A
+					- Name</a></li>
+		</ul>
+	</div>
+	<div class="col-lg-6" style="padding: 20px">
+		<form role="search">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search"
+					name="srch-term" id="srch-term" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="submit">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<span style="font-size: 36px">Shopping List</span><span
+			class="pull-right"> <a class="btn btn-default" href="/"
+			th:href="@{|/addlist|}" role="button">Add List</a></span>
+		<table class="table table-striped table-hover ">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th></th>
+					<th>Options</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="list : ${lists}">
-  					<td th:text="${list.name}"></td>
-					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}|}" role="button">Show</a></td>
-					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}/delete|}" role="button">Delete</a></td>
-  				</tr>
-  					
+					<td style="padding-top:20px" th:bgcolor="${list.color}" th:text="${list.name}"></td>
+					<td style="padding-top:20px" th:bgcolor="${list.color}" th:text="${list.category}"></td>
+					<td th:bgcolor="${list.color}"><a
+						class="btn btn-default btn-xs" href="/"
+						th:href="@{|/list/${list.id}|}" role="button">Show</a></td>
+					<td th:bgcolor="${list.color}"><a
+						class="btn btn-default btn-xs" href="/"
+						th:href="@{|/list/${list.id}/delete|}" role="button">Delete</a></td>
+				</tr>
+
 			</tbody>
 		</table>
-	</div>  		
+	</div>
 </body>
 </html>
