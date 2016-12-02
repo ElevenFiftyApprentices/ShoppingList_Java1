@@ -45,16 +45,16 @@ public class Note {
 		return createdUtc;
 	}
 
-	public void setCreatedUtc(Date createdUtc) {
-		this.createdUtc = createdUtc;
+	public void setCreatedUtc() {
+		this.createdUtc = new Date(System.currentTimeMillis());
 	}
 
 	public Date getModifiedUtc() {
 		return modifiedUtc;
 	}
 
-	public void setModifiedUtc(Date modifiedUtc) {
-		this.modifiedUtc = modifiedUtc;
+	public void setModifiedUtc() {
+		this.modifiedUtc = new Date(System.currentTimeMillis());
 	}
 	
 	

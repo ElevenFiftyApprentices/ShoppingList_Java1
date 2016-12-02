@@ -12,6 +12,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import shoppinglistjava1.java.repository.UserRepository;
 
 @Entity
 @Table(name = "users")
@@ -40,6 +45,12 @@ public class User {
 	private String role;
 	
 	private boolean active;
+	
+	public String getCurrentEmail(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		return email;
+	}
 
 	public List<ShoppingList> getShoppingLists() {
 		return shoppingLists;
