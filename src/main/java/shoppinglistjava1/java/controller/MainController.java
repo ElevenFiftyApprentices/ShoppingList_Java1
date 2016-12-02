@@ -53,7 +53,7 @@ public class MainController {
 		return "signup";
 	}
 
-	@PostMapping("signup")
+	@PostMapping("/signup")
 	public String signupSave(@ModelAttribute @Valid User user,
 			BindingResult result, Model model) {
 
@@ -66,6 +66,11 @@ public class MainController {
 			return "redirect:/";
 		}
 
+	}
+	
+	@GetMapping("/error")
+	public String error(){
+	return "error";
 	}
 	
 	

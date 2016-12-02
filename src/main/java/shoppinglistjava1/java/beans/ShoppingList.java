@@ -35,11 +35,39 @@ public class ShoppingList {
 
 	@Size(max = 100)
 	private String color;
+
+	private String category;
 	
 	private Date createdUtc;
 	
 	private Date modifiedUtc;
+	
+	
 
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc(Date createdUtc) {
+		this.createdUtc = createdUtc;
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc(Date modifiedUtc) {
+		this.modifiedUtc = modifiedUtc;
+	}
 
 	public long getId() {
 		return id;
