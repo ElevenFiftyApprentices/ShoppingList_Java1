@@ -17,9 +17,9 @@
 			</thead>
 			<tbody>
 				<tr th:each="list : ${lists}">
-  					<td th:text="${list.name}"></td>
-					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}|}" role="button">Show</a></td>
-					<td><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}/delete|}" role="button">Delete</a></td>
+  					<td th:bgcolor="${list.color}" th:text="${list.name}"></td>
+					<td th:bgcolor="${list.color}"><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}|}" role="button">Show</a></td>
+					<td th:bgcolor="${list.color}"><a class="btn btn-default btn-xs" href="/" th:href="@{|/list/${list.id}/delete|}" role="button">Delete</a></td>
   				</tr>
   					
 			</tbody>

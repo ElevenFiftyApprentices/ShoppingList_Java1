@@ -7,8 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body layout:fragment="content">
-	<div class="row">
-		<span style="font-size: 30px; padding: 5px"
+	<div class="row" >
+		<span style="font-size: 30px; padding: 5px;"
 			th:text="${shoppingList.name}"> </span><span style="padding: 5px">
 			Shopping List</span> <span class="pull-right" style="padding: 5px"><a
 			class="btn btn-default" href="/"
@@ -18,7 +18,7 @@
 			th:href="@{|/list/${shoppingList.id}/deletechecked|}" role="button">
 				Delete Checked</a></span>
 	</div>
-	
+
 	<div class="btn-group col-lg-6">
 		<button class="btn btn-default dropdown-toggle" type="button"
 			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
