@@ -57,16 +57,16 @@ public class ShoppingList {
 		return createdUtc;
 	}
 
-	public void setCreatedUtc(Date createdUtc) {
-		this.createdUtc = createdUtc;
+	public void setCreatedUtc() {
+		this.createdUtc = new Date(System.currentTimeMillis());
 	}
 
 	public Date getModifiedUtc() {
 		return modifiedUtc;
 	}
 
-	public void setModifiedUtc(Date modifiedUtc) {
-		this.modifiedUtc = modifiedUtc;
+	public void setModifiedUtc() {
+		this.modifiedUtc = new Date(System.currentTimeMillis());
 	}
 
 	public long getId() {
@@ -107,16 +107,16 @@ public class ShoppingList {
 		return createdUtc;
 	}
 
-	public void setCreatedUTC(Date createdUTC) {
-		this.createdUtc = createdUTC;
+	public void setCreatedUTC() {
+		this.createdUtc = new Date(System.currentTimeMillis());
 	}
 
 	public Date getModifiedUTC() {
 		return modifiedUtc;
 	}
 
-	public void setModifiedUTC(Date modifiedUTC) {
-		this.modifiedUtc = modifiedUTC;
+	public void setModifiedUTC() {
+		this.modifiedUtc = new Date(System.currentTimeMillis());
 	}
 
 	
