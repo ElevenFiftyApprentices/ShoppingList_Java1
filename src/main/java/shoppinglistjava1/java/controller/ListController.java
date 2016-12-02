@@ -68,11 +68,17 @@ public class ListController {
 	}
 
 	@GetMapping("/lists")
-	public String lists(Model model) {
+	public String lists(Model model, @RequestParam(name = "srch-term", required = false) String searchTerm) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User v = userRepo.findOneByEmail(email);
-		model.addAttribute("lists", shoppingListRepo.findAllByUser(v));
+		
+		if (searchTerm == null || "".equals(searchTerm)) {
+			model.addAttribute("lists", shoppingListRepo.findAllByUser(v));
+		} else {
+			model.addAttribute("lists", shoppingListRepo.findByCategoryContainsOrNameContainsAllIgnoreCase(searchTerm, searchTerm));
+		}
+		
 		return "lists";
 	}
 
@@ -135,7 +141,6 @@ public class ListController {
 			return "listitemedit";
 		} else {
 			item.setList(shoppingListRepo.findOne(id));
-			item.setCreatedUtc(new Date(System.currentTimeMillis()));
 			item.setModifiedUtc(new Date(System.currentTimeMillis()));
 			listItemRepo.save(item);
 			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
@@ -350,5 +355,42 @@ public class ListController {
 			return "redirect:/list/" + id;
 		}
 	}
+	
+	@GetMapping("/lists/az")
+	public String orderListsAz(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByCategoryAsc(v));
+		return "lists";
+	}
+	
+	@GetMapping("/lists/za")
+	public String orderListsZa(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByCategoryDesc(v));
+		return "lists";
+	}
+	
+	@GetMapping("/lists/azname")
+	public String orderListsAzname(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByNameAsc(v));
+		return "lists";
+	}
+	
+	@GetMapping("/lists/zaname")
+	public String orderListsZaname(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User v = userRepo.findOneByEmail(email);
+		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByNameDesc(v));
+		return "lists";
+	}
+
 
 }

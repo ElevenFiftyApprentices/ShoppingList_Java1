@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS heroku_5045fdc56437371.users (
   user_id INT NOT NULL,
   name VARCHAR(100) NOT NULL,
   color VARCHAR(100) NOT NULL,
+  category VARCHAR(100) NULL,
   created_utc TIMESTAMP NOT NULL,
   modified_utc TIMESTAMP NOT NULL,
   PRIMARY KEY(id));

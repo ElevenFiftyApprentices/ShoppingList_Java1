@@ -59,10 +59,10 @@
 			</thead>
 			<tbody>
 				<tr th:each="item : ${listItems}">
-					<td th:if="${item.isChecked} == true" class="pull-left"><a
+					<td th:if="${item.isChecked} == true"><a
 						th:href="@{|/list/${shoppingList.id}/check/${item.id}|}"><i
 							class="fa fa-check-square-o" aria-hidden="true"></i></a></td>
-					<td th:if="${item.isChecked} == false" class="pull-left"><a
+					<td th:if="${item.isChecked} == false"><a
 						th:href="@{|/list/${shoppingList.id}/check/${item.id}|}"><i
 							class="fa fa-square-o" aria-hidden="true"></i></a></td>
 					<td th:if="${item.isChecked} == true">
