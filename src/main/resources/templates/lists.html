@@ -51,8 +51,8 @@
 			</thead>
 			<tbody>
 				<tr th:each="list : ${lists}">
-					<td th:bgcolor="${list.color}" th:text="${list.name}"></td>
-					<td th:bgcolor="${list.color}" th:text="${list.category}"></td>
+					<td style="padding-top:20px" th:bgcolor="${list.color}" th:text="${list.name}"></td>
+					<td style="padding-top:20px" th:bgcolor="${list.color}" th:text="${list.category}"></td>
 					<td th:bgcolor="${list.color}"><a
 						class="btn btn-default btn-xs" href="/"
 						th:href="@{|/list/${list.id}|}" role="button">Show</a></td>
