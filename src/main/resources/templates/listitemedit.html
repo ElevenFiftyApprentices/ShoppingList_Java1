@@ -16,10 +16,11 @@
     </div>
 
     <div class="row">
-        <form method="POST" th:object="${item}" enctype="multipart/form-data">
+        <form method="POST" th:object="${item}">
             <input type="hidden" name="id" th:value="*{id}" /> <input
                 type="hidden" name="shoppingListId" th:value="${list.id}" /> <input
                 type="hidden" name="isChecked" value="*{isChecked}" />
+                <input type="hidden" name="noteId" th:value="${item.note.id}"/>
             <div class="form-group">
                 <label for="name">Contents</label> <input type="text" name="name"
                     class="form-control" placeholder="Contents" th:field="*{contents}" />

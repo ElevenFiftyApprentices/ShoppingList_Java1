@@ -15,6 +15,6 @@ public interface ListItemRepository extends CrudRepository<ListItem, Long> {
 	List<ListItem> findByListOrderByPriorityDesc(ShoppingList list);
 	List<ListItem> findByListOrderByContentsAsc(ShoppingList list);
 	List<ListItem> findByListOrderByContentsDesc(ShoppingList list);
-	List<ListItem> findByContentsContainsOrNoteContainsAllIgnoreCase(String contentsPart, String notePart);
+	List<ListItem> findByListAndContentsContainsOrPriorityContainsAllIgnoreCase(ShoppingList list, String contentsPart, String priorityPart);
 	
 }

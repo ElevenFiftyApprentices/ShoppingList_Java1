@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Table(name = "lists")
 public class ShoppingList {
 	
-	@OneToMany(mappedBy="list")
+	@OneToMany(mappedBy="list", cascade = CascadeType.ALL)
 	private List <ListItem> listItems;
 
 	@Id
