@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import shoppinglistjava1.java.beans.ListItem;
 import shoppinglistjava1.java.beans.ShoppingList;
 import shoppinglistjava1.java.beans.User;
 

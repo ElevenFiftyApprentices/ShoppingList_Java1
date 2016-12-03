@@ -35,7 +35,7 @@ public class ListItem {
 	private Date modifiedUtc;
 	
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "note_id")
 	private Note note;
 
