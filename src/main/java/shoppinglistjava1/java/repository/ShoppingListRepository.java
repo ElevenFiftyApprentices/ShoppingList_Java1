@@ -12,4 +12,9 @@ import shoppinglistjava1.java.beans.User;
 @Repository
 public interface ShoppingListRepository extends CrudRepository<ShoppingList, Long>{
 	List<ShoppingList> findAllByUser(User user);
+	List<ShoppingList> findAllByUserOrderByCategoryAsc(User user);
+	List<ShoppingList> findAllByUserOrderByCategoryDesc(User user);
+	List<ShoppingList> findAllByUserOrderByNameAsc(User user);
+	List<ShoppingList> findAllByUserOrderByNameDesc(User user);
+	List<ShoppingList> findByCategoryContainsOrNameContainsAllIgnoreCase(String categoryPart, String namePart);
 }

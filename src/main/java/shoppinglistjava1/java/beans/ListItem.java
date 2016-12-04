@@ -35,7 +35,7 @@ public class ListItem {
 	private Date modifiedUtc;
 	
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "note_id")
 	private Note note;
 
@@ -96,16 +96,16 @@ public class ListItem {
 		return createdUtc;
 	}
 
-	public void setCreatedUtc(Date createdUtc) {
-		this.createdUtc = createdUtc;
+	public void setCreatedUtc() {
+		this.createdUtc = new Date(System.currentTimeMillis());
 	}
 
 	public Date getModifiedUtc() {
 		return modifiedUtc;
 	}
 
-	public void setModifiedUtc(Date modifiedUtc) {
-		this.modifiedUtc = modifiedUtc;
+	public void setModifiedUtc() {
+		this.modifiedUtc = new Date(System.currentTimeMillis());
 	}
 
 	

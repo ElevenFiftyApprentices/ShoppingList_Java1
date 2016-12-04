@@ -7,8 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body layout:fragment="content">
-	<div class="row">
-		<span style="font-size: 30px; padding: 5px"
+	<div class="row" >
+		<span style="font-size: 30px; padding: 5px;"
 			th:text="${shoppingList.name}"> </span><span style="padding: 5px">
 			Shopping List</span> <span class="pull-right" style="padding: 5px"><a
 			class="btn btn-default" href="/"
@@ -18,7 +18,11 @@
 			th:href="@{|/list/${shoppingList.id}/deletechecked|}" role="button">
 				Delete Checked</a></span>
 	</div>
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 299ceae29c79b59ea7e834528cef658827b565e5
 	<div class="btn-group col-lg-6">
 		<button class="btn btn-default dropdown-toggle" type="button"
 			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,26 +57,38 @@
 				<tr>
 					<th></th>
 					<th>Contents</th>
+					<th>Priority</th>
 					<th>Notes</th>
+					<th></th>
+					<th></th>
 					<th>Options</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="item : ${listItems}">
-					<td th:if="${item.isChecked} == true" class="pull-left"><a
+					<td style="padding-top:20px" th:if="${item.isChecked} == true"><a
 						th:href="@{|/list/${shoppingList.id}/check/${item.id}|}"><i
 							class="fa fa-check-square-o" aria-hidden="true"></i></a></td>
-					<td th:if="${item.isChecked} == false" class="pull-left"><a
+					<td style="padding-top:20px" th:if="${item.isChecked} == false"><a
 						th:href="@{|/list/${shoppingList.id}/check/${item.id}|}"><i
 							class="fa fa-square-o" aria-hidden="true"></i></a></td>
-					<td th:if="${item.isChecked} == true">
-						<p style="text-decoration: line-through"
+					<td style="padding-top:20px" th:if="${item.isChecked} == true">
+						<p style="text-decoration: line-through; padding-top:20px"
 							th:utext="${item.contents}"></p>
 					</td>
-					<td th:if="${item.isChecked} == false" th:utext="${item.contents}"></td>
-					<td> <span th:text="${item.note.body}"></span> <a class="btn btn-default btn-xs" href="/"
+					<td style="padding-top:20px" th:if="${item.isChecked} == false" th:utext="${item.contents}"></td>
+					<td  style="padding-top:20px" th:if="${item.priority} == 1">Grab It Now!</td>
+					<td style="padding-top:20px" th:if="${item.priority} == 2">Need It Soon!</td>
+					<td style="padding-top:20px" th:if="${item.priority} == 3">It Can Wait!</td>
+					<td> <span style="padding-top:20px" th:text="${item.note.body}"></span> </td>
+					<td><a class="btn btn-default btn-xs" href="/"
 						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}/editnote|}" role="button">
 							 <i class="fa fa-sticky-note-o" aria-hidden="true"></i></a></td>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 299ceae29c79b59ea7e834528cef658827b565e5
 					<td><a class="btn btn-default btn-xs" href="/"
 						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}|}" role="button">
 							Edit </a></td>

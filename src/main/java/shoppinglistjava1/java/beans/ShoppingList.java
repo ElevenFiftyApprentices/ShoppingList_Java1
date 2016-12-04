@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Table(name = "lists")
 public class ShoppingList {
 	
-	@OneToMany(mappedBy="list")
+	@OneToMany(mappedBy="list", cascade = CascadeType.ALL)
 	private List <ListItem> listItems;
 
 	@Id
@@ -35,11 +35,39 @@ public class ShoppingList {
 
 	@Size(max = 100)
 	private String color;
+
+	private String category;
 	
 	private Date createdUtc;
 	
 	private Date modifiedUtc;
+	
+	
 
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public Date getCreatedUtc() {
+		return createdUtc;
+	}
+
+	public void setCreatedUtc() {
+		this.createdUtc = new Date(System.currentTimeMillis());
+	}
+
+	public Date getModifiedUtc() {
+		return modifiedUtc;
+	}
+
+	public void setModifiedUtc() {
+		this.modifiedUtc = new Date(System.currentTimeMillis());
+	}
 
 	public long getId() {
 		return id;
@@ -77,16 +105,16 @@ public class ShoppingList {
 		return createdUtc;
 	}
 
-	public void setCreatedUTC(Date createdUTC) {
-		this.createdUtc = createdUTC;
+	public void setCreatedUTC() {
+		this.createdUtc = new Date(System.currentTimeMillis());
 	}
 
 	public Date getModifiedUTC() {
 		return modifiedUtc;
 	}
 
-	public void setModifiedUTC(Date modifiedUTC) {
-		this.modifiedUtc = modifiedUTC;
+	public void setModifiedUTC() {
+		this.modifiedUtc = new Date(System.currentTimeMillis());
 	}
 
 	
