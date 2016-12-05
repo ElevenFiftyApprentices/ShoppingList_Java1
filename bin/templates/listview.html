@@ -5,39 +5,85 @@
 <head>
 <title>Shopping List List View</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+.thumbnail {
+	position: relative;
+}
+
+.caption {
+	position: absolute;
+	top: 38%;
+	left: 0;
+	width: 100%;
+}
+
+h1 {
+	font-size: 120px;
+	color: white;
+	text-transform: uppercase;
+}
+</style>
 </head>
 
 
-	
+
 
 
 <body layout:fragment="content">
-<div class="banner">
-	<div th:if="${shoppingList.category} == grocery}">
-		<img src="/img/groceries.jpg"/>
+	<div class="banner col-lg-12">
+		<div th:if="${shoppingList.category} == grocery"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/groceries.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+		<div th:if="${shoppingList.category} == clothes"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/clothes.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+		<div th:if="${shoppingList.category} == shoes"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/shoes.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+		<div th:if="${shoppingList.category} == home"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/home.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+		<div th:if="${shoppingList.category} == gifts"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/gifts.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+		<div th:if="${shoppingList.category} == makeup"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/makeup.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+		<div th:if="${shoppingList.category} == other"
+			class="col-sm-12 thumbnail text-center">
+			<img class="img-responsive" src="/assets/img/other.jpg" />
+			<div class="caption">
+				<h1 th:text="${shoppingList.name}"></h1>
+			</div>
+		</div>
+
 	</div>
-	<div th:if="${shoppingList.category} == clothes}">
-		<img src="/img/clothes.jpg"/>
-	</div>
-	<div th:if="${shoppingList.category} == shoes}">
-		<img src="/img/shoes.jpg"/>
-	</div>
-  	<div th:if="${shoppingList.category} == home}">
-		<img src="/img/home.jpg"/>
-	</div>
-	<div th:if="${shoppingList.category} == gifts}">
-		<img src="/img/gifts.jpg"/>
-	</div>		
-	<div th:if="${shoppingList.category} == makeup}">
-		<img src="/img/makeup.jpg"/>
-	</div>		
-	<div th:if="${shoppingList.category} == other}">
-		<img src="/img/other.jpg"/>
-	</div>			
-  </div>
 	<div class="row">
-		<h2 th:style="'color:' + ${shoppingList.color} + ';'"
-			th:text="${shoppingList.name}"> </h2> <span class="pull-right" style="padding: 5px"><a
+		<span class="pull-right" style="padding: 5px"><a
 			class="btn btn-default" href="/"
 			th:href="@{|/list/${shoppingList.id}/additem|}" role="button">
 				Add Item</a></span> <span class="pull-right" style="padding: 5px"><a
@@ -107,7 +153,8 @@
 						It Soon!</td>
 					<td style="padding-top: 20px" th:if="${item.priority} == 3">It
 						Can Wait!</td>
-					<td style="padding-top: 20px"><span 
+					<td style="padding-top: 20px"><span
+						th:style="'color:' + ${shoppingList.color} + ';'"
 						th:text="${item.note.body}"></span></td>
 					<td><a class="btn btn-default btn-xs" href="/"
 						th:href="@{|/list/${shoppingList.id}/edititem/${item.id}/editnote|}"
