@@ -58,7 +58,7 @@ public class ListController {
 		model.addAttribute("id", id);
 		User currentUser = ListController.getCurrentUser();
 		ShoppingList l = shoppingListRepo.findOne(id);
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		if (currentUser.getShoppingLists().contains(l)) {
@@ -109,7 +109,7 @@ public class ListController {
 	@GetMapping("/list/{id}/additem")
 	public String listItemAdd(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		model.addAttribute("list", shoppingListRepo.findOne(id));
@@ -149,7 +149,7 @@ public class ListController {
 	public String listItemEdit(Model model, @PathVariable(name = "id") long id,
 			@PathVariable(name = "itemid") long itemid) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		model.addAttribute("list", shoppingListRepo.findOne(id));
@@ -199,7 +199,7 @@ public class ListController {
 	public String listItemDelete(Model model, @PathVariable(name = "id") long id,
 			@PathVariable(name = "itemid") long itemid) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		model.addAttribute("list", shoppingListRepo.findOne(id));
@@ -223,7 +223,7 @@ public class ListController {
 	@GetMapping("/list/{id}/delete")
 	public String listDelete(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		model.addAttribute("list", shoppingListRepo.findOne(id));
@@ -251,7 +251,7 @@ public class ListController {
 	public String listItemCheck(Model model, @PathVariable(name = "id") long id,
 			@PathVariable(name = "itemid") long itemid) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ListItem i = listItemRepo.findOne(itemid);
@@ -266,7 +266,7 @@ public class ListController {
 	@GetMapping("/list/{id}/clearchecked")
 	public String clearChecked(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
@@ -285,7 +285,7 @@ public class ListController {
 	@GetMapping("/list/{id}/deletechecked")
 	public String deleteChecked(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
@@ -319,7 +319,7 @@ public class ListController {
 	@GetMapping("/list/{id}/high")
 	public String orderHigh(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
@@ -335,7 +335,7 @@ public class ListController {
 	@GetMapping("/list/{id}/low")
 	public String orderLow(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
@@ -349,7 +349,7 @@ public class ListController {
 	@GetMapping("/list/{id}/az")
 	public String orderAz(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
@@ -363,7 +363,7 @@ public class ListController {
 	@GetMapping("/list/{id}/za")
 	public String orderZa(Model model, @PathVariable(name = "id") long id) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
@@ -378,7 +378,7 @@ public class ListController {
 	public String NoteEdit(Model model, @PathVariable(name = "id") long id,
 			@PathVariable(name = "itemid") long itemid) {
 		User currentUser = ListController.getCurrentUser();
-		if(currentUser.equals(shoppingListRepo.findOne(id).getUser())){
+		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
 		ShoppingList l = shoppingListRepo.findOne(id);
