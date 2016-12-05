@@ -102,6 +102,7 @@
 		</table>
 		<a th:href="@{|/list/${shoppingList.id}/clearchecked|}">Clear
 			Checked Items</a>
+		<p th:text="'List last modified: ' + ${shoppingList.modifiedUTC}"></p>
 	</div>
 </body>
 </html>

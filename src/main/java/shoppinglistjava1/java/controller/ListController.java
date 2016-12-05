@@ -141,6 +141,9 @@ public class ListController {
 			item.setNote(n);
 			listItemRepo.save(item);
 			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
+			ShoppingList l = shoppingListRepo.findOne(id);
+			l.setModifiedUTC();
+			shoppingListRepo.save(l);
 			return "redirect:/list/" + id;
 		}
 	}
@@ -168,6 +171,9 @@ public class ListController {
 			item.setList(shoppingListRepo.findOne(id));
 			item.setModifiedUtc();
 			item.setNote(listItemRepo.findOne(itemid).getNote());
+			ShoppingList l = shoppingListRepo.findOne(id);
+			l.setModifiedUTC();
+			shoppingListRepo.save(l);
 			listItemRepo.save(item);
 			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
 			return "redirect:/list/" + id;
@@ -216,6 +222,8 @@ public class ListController {
 		noteRepo.delete(listItemRepo.findOne(itemid).getNote());
 		listItemRepo.delete(listItemRepo.findOne(itemid));
 		li.remove(listItemRepo.findOne(itemid));
+		l.setModifiedUTC();
+		shoppingListRepo.save(l);
 		model.addAttribute("list", l);
 		return "redirect:/list/" + id;
 	}
@@ -311,6 +319,7 @@ public class ListController {
 		}
 
 		l.setListItems(li);
+		l.setModifiedUTC();
 		shoppingListRepo.save(l);
 		model.addAttribute("list", l);
 		return "redirect:/list/" + id;
@@ -408,6 +417,9 @@ public class ListController {
 			note.setCreatedUtc();
 			note.setModifiedUtc();
 			noteRepo.save(note);
+			ShoppingList l = shoppingListRepo.findOne(id);
+			l.setModifiedUTC();
+			shoppingListRepo.save(l);
 			model.addAttribute("listItems", shoppingListRepo.findOne(id).getListItems());
 			return "redirect:/list/" + id;
 		}
