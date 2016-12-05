@@ -5,6 +5,10 @@
 <head>
 <title>Shopping List</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+
 </head>
 <body layout:fragment="content">
 	<h1>Add New Shopping List</h1>
@@ -12,38 +16,46 @@
 		<form method="POST" th:object="${list}">
 			<input type="hidden" name="id" th:value="*{id}" />
 			<div class="form-group">
-				<label for="name">Name</label> <input type="text"
-					name="name" class="form-control" placeholder="Name"
-					th:field="*{name}" /> <span
-					th:if="${#fields.hasErrors('name')}"
-					th:errors="*{name}">Name Error</span>
+				<label for="name">Name</label> <input type="text" name="name"
+					class="form-control" placeholder="Name" th:field="*{name}" /> <span
+					th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+					Error</span>
 			</div>
+			
 			<div class="form-group">
-				<label for="color">Color</label> <input type="text"
-					name="color" class="form-control" placeholder="Color"
-					th:field="*{color}" /> <span
-					th:if="${#fields.hasErrors('color')}"
+				<label for="color">Color - Use Hexcode or Basic Color Name</label> <input
+					type="text" name="color" class="form-control" placeholder="Color"
+					th:field="*{color}" /> <span th:if="${#fields.hasErrors('color')}"
 					th:errors="*{color}">Color Error</span>
 			</div>
+			<div class="container">
+				<input type='text' id="flat" />
+			</div>
 			<div class="form-group">
-		    	<label for="category">Priority:</label>
-		    	<select class="form-control" name="category">
-		    		<option th:selected="*{category} == grocery" value="grocery">Grocery</option>
-		    		<option th:selected="*{category} == clothes" value="clothes">Clothes</option>
-		    		<option th:selected="*{category} == shoes" value="shoes">Shoes</option>
-		    		<option th:selected="*{category} == home" value="home">Home</option>
-		    		<option th:selected="*{category} == gifts" value="gifts">Gifts</option>
-		    		<option th:selected="*{category} == makeup" value="makeup">Makeup</option>
-		    		<option th:selected="*{category} == other" value="other">Other</option>
-		    		</select>
-		    </div>
+				<label for="category">Priority:</label> <select class="form-control"
+					name="category">
+					<option th:selected="*{category} == grocery" value="grocery">Grocery</option>
+					<option th:selected="*{category} == clothes" value="clothes">Clothes</option>
+					<option th:selected="*{category} == shoes" value="shoes">Shoes</option>
+					<option th:selected="*{category} == home" value="home">Home</option>
+					<option th:selected="*{category} == gifts" value="gifts">Gifts</option>
+					<option th:selected="*{category} == makeup" value="makeup">Makeup</option>
+					<option th:selected="*{category} == other" value="other">Other</option>
+				</select>
+			</div>
 			<button type="submit" class="btn btn-default btn-xs">Submit</button>
 		</form>
-			<div class="row">
+		<div class="row">
 			<a class="col-md-4" href="/lists">Back</a>
 		</div>
 	</div>
-
-
+	<script type="text/javascript">
+		$("#flat").spectrum({
+			flat : true,
+			preferredFormat: "hex",
+			showButtons: false,
+			showInput : true
+		});
+	</script>
 </body>
 </html>
