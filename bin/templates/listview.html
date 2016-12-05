@@ -6,7 +6,35 @@
 <title>Shopping List List View</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
+
+	
+
+
 <body layout:fragment="content">
+<div class="banner">
+	<div th:if="${shoppingList.category} == grocery}">
+		<img src="/img/groceries.jpg"/>
+	</div>
+	<div th:if="${shoppingList.category} == clothes}">
+		<img src="/img/clothes.jpg"/>
+	</div>
+	<div th:if="${shoppingList.category} == shoes}">
+		<img src="/img/shoes.jpg"/>
+	</div>
+  	<div th:if="${shoppingList.category} == home}">
+		<img src="/img/home.jpg"/>
+	</div>
+	<div th:if="${shoppingList.category} == gifts}">
+		<img src="/img/gifts.jpg"/>
+	</div>		
+	<div th:if="${shoppingList.category} == makeup}">
+		<img src="/img/makeup.jpg"/>
+	</div>		
+	<div th:if="${shoppingList.category} == other}">
+		<img src="/img/other.jpg"/>
+	</div>			
+  </div>
 	<div class="row">
 		<h2 th:style="'color:' + ${shoppingList.color} + ';'"
 			th:text="${shoppingList.name}"> </h2> <span class="pull-right" style="padding: 5px"><a
