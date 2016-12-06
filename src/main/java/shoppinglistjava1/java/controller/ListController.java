@@ -315,59 +315,89 @@ public class ListController {
 	}
 
 	@GetMapping("/list/{id}/high")
-	public String orderHigh(Model model, @PathVariable(name = "id") long id) {
+	public String orderHigh(Model model, @PathVariable(name = "id") long id,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
+		ShoppingList l = shoppingListRepo.findOne(id);
 		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
-		ShoppingList l = shoppingListRepo.findOne(id);
-		List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
-		for (ListItem lix : li) {
+		if (currentUser.getShoppingLists().contains(l)) {
+			model.addAttribute("shoppingList", l);
 		}
-		model.addAttribute("listItems", li);
-		model.addAttribute("shoppingList", l);
+		if (searchTerm == null || "".equals(searchTerm)) {
+			List<ListItem> li = listItemRepo.findByListOrderByPriorityAsc(l);
+			model.addAttribute("listItems", li);
+		} else {
+			List<ListItem> li = listItemRepo.findByListAndContentsContainsOrPriorityContainsAllIgnoreCase(l, searchTerm, searchTerm);
+			model.addAttribute("listItems", li);
+		}
 		return "listview";
 		}
 	}
 
 	@GetMapping("/list/{id}/low")
-	public String orderLow(Model model, @PathVariable(name = "id") long id) {
+	public String orderLow(Model model, @PathVariable(name = "id") long id,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
+		ShoppingList l = shoppingListRepo.findOne(id);
 		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
-		ShoppingList l = shoppingListRepo.findOne(id);
-		List<ListItem> li = listItemRepo.findByListOrderByPriorityDesc(l);
-		model.addAttribute("listItems", li);
-		model.addAttribute("shoppingList", l);
+		if (currentUser.getShoppingLists().contains(l)) {
+			model.addAttribute("shoppingList", l);
+		}
+		if (searchTerm == null || "".equals(searchTerm)) {
+			List<ListItem> li = listItemRepo.findByListOrderByPriorityDesc(l);
+			model.addAttribute("listItems", li);
+		} else {
+			List<ListItem> li = listItemRepo.findByListAndContentsContainsOrPriorityContainsAllIgnoreCase(l, searchTerm, searchTerm);
+			model.addAttribute("listItems", li);
+		}
 		return "listview";
 		}
 	}
 
 	@GetMapping("/list/{id}/az")
-	public String orderAz(Model model, @PathVariable(name = "id") long id) {
+	public String orderAz(Model model, @PathVariable(name = "id") long id,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
+		ShoppingList l = shoppingListRepo.findOne(id);
 		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
-		ShoppingList l = shoppingListRepo.findOne(id);
-		List<ListItem> li = listItemRepo.findByListOrderByContentsAsc(l);
-		model.addAttribute("listItems", li);
-		model.addAttribute("shoppingList", l);
+		if (currentUser.getShoppingLists().contains(l)) {
+			model.addAttribute("shoppingList", l);
+		}
+		if (searchTerm == null || "".equals(searchTerm)) {
+			List<ListItem> li = listItemRepo.findByListOrderByContentsAsc(l);
+			model.addAttribute("listItems", li);
+		} else {
+			List<ListItem> li = listItemRepo.findByListAndContentsContainsOrPriorityContainsAllIgnoreCase(l, searchTerm, searchTerm);
+			model.addAttribute("listItems", li);
+		}
 		return "listview";
 		}
 	}
 
 	@GetMapping("/list/{id}/za")
-	public String orderZa(Model model, @PathVariable(name = "id") long id) {
+	public String orderZa(Model model, @PathVariable(name = "id") long id,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
+		ShoppingList l = shoppingListRepo.findOne(id);
 		if(!currentUser.equals(shoppingListRepo.findOne(id).getUser())){
 			return "redirect:/lists";
 		} else {
-		ShoppingList l = shoppingListRepo.findOne(id);
-		List<ListItem> li = listItemRepo.findByListOrderByContentsDesc(l);
-		model.addAttribute("listItems", li);
-		model.addAttribute("shoppingList", l);
+		if (currentUser.getShoppingLists().contains(l)) {
+			model.addAttribute("shoppingList", l);
+		}
+		if (searchTerm == null || "".equals(searchTerm)) {
+			List<ListItem> li = listItemRepo.findByListOrderByContentsDesc(l);
+			model.addAttribute("listItems", li);
+		} else {
+			List<ListItem> li = listItemRepo.findByListAndContentsContainsOrPriorityContainsAllIgnoreCase(l, searchTerm, searchTerm);
+			model.addAttribute("listItems", li);
+		}
 		return "listview";
 		}
 	}
@@ -415,30 +445,85 @@ public class ListController {
 	}
 
 	@GetMapping("/lists/az")
-	public String orderListsAz(Model model) {
+	public String orderListsAz(Model model,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
-		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByCategoryAsc(currentUser));
+		if (searchTerm == null || "".equals(searchTerm)) {
+			model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByCategoryAsc(currentUser));
+		} else {
+			ArrayList<ShoppingList> userLists = new ArrayList<ShoppingList>();
+			List<ShoppingList> lists = shoppingListRepo.findByCategoryContainsOrNameContainsAllIgnoreCase(searchTerm,
+					searchTerm);
+			for (ShoppingList list : lists) {
+				if (list.getUser() == currentUser) {
+					userLists.add(list);
+				}
+			}
+			model.addAttribute("lists", userLists);
+		}
+		
 		return "lists";
 	}
 
 	@GetMapping("/lists/za")
-	public String orderListsZa(Model model) {
+	public String orderListsZa(Model model,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
-		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByCategoryDesc(currentUser));
+		if (searchTerm == null || "".equals(searchTerm)) {
+			model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByCategoryDesc(currentUser));
+		} else {
+			ArrayList<ShoppingList> userLists = new ArrayList<ShoppingList>();
+			List<ShoppingList> lists = shoppingListRepo.findByCategoryContainsOrNameContainsAllIgnoreCase(searchTerm,
+					searchTerm);
+			for (ShoppingList list : lists) {
+				if (list.getUser() == currentUser) {
+					userLists.add(list);
+				}
+			}
+			model.addAttribute("lists", userLists);
+		}
 		return "lists";
 	}
 
 	@GetMapping("/lists/azname")
-	public String orderListsAzname(Model model) {
+	public String orderListsAzname(Model model,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
-		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByNameAsc(currentUser));
+		if (searchTerm == null || "".equals(searchTerm)) {
+			model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByNameAsc(currentUser));
+		} else {
+			ArrayList<ShoppingList> userLists = new ArrayList<ShoppingList>();
+			List<ShoppingList> lists = shoppingListRepo.findByCategoryContainsOrNameContainsAllIgnoreCase(searchTerm,
+					searchTerm);
+			for (ShoppingList list : lists) {
+				if (list.getUser() == currentUser) {
+					userLists.add(list);
+				}
+			}
+			model.addAttribute("lists", userLists);
+		}
+		
 		return "lists";
 	}
 
 	@GetMapping("/lists/zaname")
-	public String orderListsZaname(Model model) {
+	public String orderListsZaname(Model model,
+			@RequestParam(name = "srch-term", required = false) String searchTerm) {
 		User currentUser = ListController.getCurrentUser();
-		model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByNameDesc(currentUser));
+		if (searchTerm == null || "".equals(searchTerm)) {
+			model.addAttribute("lists", shoppingListRepo.findAllByUserOrderByNameDesc(currentUser));
+		} else {
+			ArrayList<ShoppingList> userLists = new ArrayList<ShoppingList>();
+			List<ShoppingList> lists = shoppingListRepo.findByCategoryContainsOrNameContainsAllIgnoreCase(searchTerm,
+					searchTerm);
+			for (ShoppingList list : lists) {
+				if (list.getUser() == currentUser) {
+					userLists.add(list);
+				}
+			}
+			model.addAttribute("lists", userLists);
+		}
+		
 		return "lists";
 	}
 
